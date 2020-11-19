@@ -20,7 +20,6 @@ export const getStaticProps = async context => {
     }
 }
 
-
 // This function gets called at build time
 export const getStaticPaths = async () => {
     let page = 1;
@@ -31,11 +30,7 @@ export const getStaticPaths = async () => {
         const res = await fetch(`https://humanmade.com/wp-json/wp/v2/posts/?per_page=100&page=${page}`);
         const posts = await res.json();
 
-        // console.log( posts );
-
         if ( posts?.data?.status === 400 ) {
-
-            console.log("TESTESTSETSTSE");
             page = 0;
             break;
         }
@@ -54,8 +49,6 @@ export const getStaticPaths = async () => {
 
         page++;
     } while ( page > 0 );
-
-    console.log( paths );
 
     // We'll pre-render only these paths at build time.
     // { fallback: false } means other routes should 404.

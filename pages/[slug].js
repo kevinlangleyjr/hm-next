@@ -40,7 +40,6 @@ export const getStaticPaths = async () => {
 }
 
 const Page = ( { data } ) => {
-    console.log( data );
   return (
       <>
         <Head>
