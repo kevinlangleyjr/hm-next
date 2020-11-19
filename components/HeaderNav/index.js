@@ -6,49 +6,37 @@ const HeaderNav = () => {
             <ul>
                 <li>
                     <Link href="/">
-                        <a>
-                            Home
-                        </a>
+                        <a>Home</a>
                     </Link>
                 </li>
                 <li>
                     <Link href="/what-we-do">
-                        <a>
-                            What we do
-                        </a>
+                        <a>What we do</a>
                     </Link>
                 </li>
                 <li>
                     <Link href="/who-we-are">
-                        <a>
-                            Who we are
-                        </a>
+                        <a>Who we are</a>
                     </Link>
                 </li>
                 <li>
                     <Link href="/blog">
-                        <a>
-                            Blog
-                        </a>
+                        <a>Blog</a>
                     </Link>
                 </li>
                 <li>
                     <Link href="/resources">
-                        <a>
-                            Resources
-                        </a>
+                        <a>Resources</a>
                     </Link>
                 </li>
                 <li>
                     <Link href="/get-in-touch">
-                        <a>
-                            Get in touch
-                        </a>
+                        <a>Get in touch</a>
                     </Link>
                 </li>
             </ul>
         </nav>
-    )
-}
+    );
+};
 
 export default HeaderNav;

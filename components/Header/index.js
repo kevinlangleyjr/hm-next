@@ -7,7 +7,7 @@ const Header = () => {
             <Logo />
             <HeaderNav />
         </header>
-    )
-}
+    );
+};
 
 export default Header;
