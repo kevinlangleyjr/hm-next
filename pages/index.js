@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import HtmlToReact, { Parser as HtmlToReactParser } from 'html-to-react';
 
 // This function gets called at build time on server-side.
 // It may be called again, on a serverless function, if
@@ -20,6 +20,9 @@ export const getStaticProps = async () => {
 }
 
 const Home = ( { data } ) => {
+  let htmlToReactParser = new HtmlToReactParser();
+  const content = htmlToReactParser.parse( data.content.rendered );
+
   return (
     <>
       <Head>
@@ -27,10 +30,9 @@ const Home = ( { data } ) => {
       </Head>
 
       <main>
-        <h1>
-          {data.title.rendered}
-        </h1>
-        <div className="content" dangerouslySetInnerHTML={{ __html: data.content.rendered }} />
+        <div className="content">
+          { content }
+        </div>
       </main>
     </>
   );

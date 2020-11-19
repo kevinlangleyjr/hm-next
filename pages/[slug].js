@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import HtmlToReact, { Parser as HtmlToReactParser } from 'html-to-react';
 
 // This function gets called at build time on server-side.
 // It may be called again, on a serverless function, if
@@ -24,7 +25,7 @@ export const getStaticProps = async context => {
 // This function gets called at build time
 export const getStaticPaths = async () => {
   // Call an external API endpoint to get posts
-  const res = await fetch( 'https://humanmade.com/wp-json/wp/v2/pages')
+  const res = await fetch( 'https://humanmade.com/wp-json/wp/v2/pages?per_page=100')
   const pages = await res.json()
 
   // Get the paths we want to pre-render based on pages
@@ -40,6 +41,8 @@ export const getStaticPaths = async () => {
 }
 
 const Page = ( { data } ) => {
+  let htmlToReactParser = new HtmlToReactParser();
+  const content = htmlToReactParser.parse( data.content.rendered );
   return (
       <>
         <Head>
@@ -50,7 +53,9 @@ const Page = ( { data } ) => {
             <h1>
                 {data.title.rendered}
             </h1>
-              <div className="content" dangerouslySetInnerHTML={{ __html: data.content.rendered }} />
+            <div className="content">
+                { content }
+            </div>
         </main>
     </>
   )
