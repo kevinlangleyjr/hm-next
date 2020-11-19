@@ -1,9 +1,8 @@
-import Head from 'next/head'
+import Head from 'next/head';
+import PropTypes from 'prop-types';
+import { Parser as HtmlToReactParser } from 'html-to-react';
 
-// This function gets called at build time on server-side.
-// It may be called again, on a serverless function, if
-// revalidation is enabled and a new request comes in
-export const getStaticProps = async context => {
+export const getStaticProps = async (context) => {
     const { slug } = context.params;
     const res = await fetch(`https://humanmade.com/wp-json/wp/v2/posts?slug=${slug}`);
     let data = await res.json();
@@ -13,49 +12,49 @@ export const getStaticProps = async context => {
         props: {
             data,
         },
-        // Next.js will attempt to re-generate the page:
-        // - When a request comes in
-        // - At most once every 60 seconds
-        revalidate: 60, // In seconds
-    }
-}
+        revalidate: 60,
+    };
+};
 
-// This function gets called at build time
 export const getStaticPaths = async () => {
     let page = 1;
     let paths = [];
 
     do {
-        // Call an external API endpoint to get posts
-        const res = await fetch(`https://humanmade.com/wp-json/wp/v2/posts/?per_page=100&page=${page}`);
+        const res = await fetch(
+            `https://humanmade.com/wp-json/wp/v2/posts/?per_page=100&page=${page}`
+        );
         const posts = await res.json();
 
-        if ( posts?.data?.status === 400 ) {
+        if (posts?.data?.status === 400) {
             page = 0;
             break;
         }
 
-        paths = [ ...paths, ...posts.map( post => {
-            const postDate = new Date( post.date );
-            return {
-                params: {
-                    year: postDate.getFullYear().toString(),
-                    month: ( `0${ postDate.getMonth() + 1 }` ).slice( -2 ),
-                    day: ( `0${ postDate.getDate() }` ).slice( -2 ),
-                    slug: post.slug,
-                },
-            };
-        } ) ];
+        paths = [
+            ...paths,
+            ...posts.map((post) => {
+                const postDate = new Date(post.date);
+                return {
+                    params: {
+                        year: postDate.getFullYear().toString(),
+                        month: `0${postDate.getMonth() + 1}`.slice(-2),
+                        day: `0${postDate.getDate()}`.slice(-2),
+                        slug: post.slug,
+                    },
+                };
+            }),
+        ];
 
         page++;
-    } while ( page > 0 );
+    } while (page > 0);
 
-    // We'll pre-render only these paths at build time.
-    // { fallback: false } means other routes should 404.
-    return { paths, fallback: false }
-}
+    return { paths, fallback: false };
+};
 
 const Blog = ({ data }) => {
+    let htmlToReactParser = new HtmlToReactParser();
+    const content = htmlToReactParser.parse(data.content.rendered);
     return (
         <>
             <Head>
@@ -63,13 +62,22 @@ const Blog = ({ data }) => {
             </Head>
 
             <main>
-                <h1>
-                    {data.title.rendered}
-                </h1>
-                <div className="content" dangerouslySetInnerHTML={{ __html: data.content.rendered }} />
+                <h1>{data.title.rendered}</h1>
+                <div className="content">{content}</div>
             </main>
         </>
-    )
-}
+    );
+};
+
+Blog.propTypes = {
+    data: PropTypes.shape({
+        title: PropTypes.shape({
+            rendered: PropTypes.string.isRequired,
+        }),
+        content: PropTypes.shape({
+            rendered: PropTypes.string.isRequired,
+        }),
+    }),
+};
 
 export default Blog;

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import { convertToRelativeUrl } from 'utils/urls';
 
 export const getStaticProps = async () => {
@@ -9,36 +10,44 @@ export const getStaticProps = async () => {
         props: {
             data,
         },
-        // Next.js will attempt to re-generate the page:
-        // - When a request comes in
-        // - At most once every 60 seconds
-        revalidate: 60, // In seconds
-    }
-}
+        revalidate: 60,
+    };
+};
 
-const Blog = ( { data } ) => {
+const Blog = ({ data }) => {
     return (
         <div>
-            { data.map( post => (
-                <div className="post" key={ post.id }>
+            {data.map((post) => (
+                <div className="post" key={post.id}>
                     <h3>
-                        <Link href={ convertToRelativeUrl( post.link, '/blog' ) }>
-                            <a>
-                                { post.title.rendered }
-                            </a>
+                        <Link href={convertToRelativeUrl(post.link, '/blog')}>
+                            <a>{post.title.rendered}</a>
                         </Link>
                     </h3>
                 </div>
-            ) ) }
+            ))}
             <footer>
                 <Link href="/blog/page/2">
-                    <a>
-                        Next Page
-                    </a>
+                    <a>Next Page</a>
                 </Link>
             </footer>
         </div>
-    )
-}
+    );
+};
 
-export default Blog
+Blog.propTypes = {
+    data: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            link: PropTypes.string,
+            title: PropTypes.shape({
+                rendered: PropTypes.string.isRequired,
+            }),
+            content: PropTypes.shape({
+                rendered: PropTypes.string.isRequired,
+            }),
+        })
+    ),
+};
+
+export default Blog;

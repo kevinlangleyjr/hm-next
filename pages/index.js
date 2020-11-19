@@ -1,9 +1,7 @@
 import Head from 'next/head';
+import PropTypes from 'prop-types';
 import { Parser as HtmlToReactParser } from 'html-to-react';
 
-// This function gets called at build time on server-side.
-// It may be called again, on a serverless function, if
-// revalidation is enabled and a new request comes in
 export const getStaticProps = async () => {
     const res = await fetch('https://humanmade.com/wp-json/wp/v2/pages/7800');
     let data = await res.json();
@@ -12,10 +10,7 @@ export const getStaticProps = async () => {
         props: {
             data,
         },
-        // Next.js will attempt to re-generate the page:
-        // - When a request comes in
-        // - At most once every 60 seconds
-        revalidate: 60, // In seconds
+        revalidate: 60,
     };
 };
 
@@ -34,6 +29,17 @@ const Home = ({ data }) => {
             </main>
         </>
     );
+};
+
+Home.propTypes = {
+    data: PropTypes.shape({
+        title: PropTypes.shape({
+            rendered: PropTypes.string.isRequired,
+        }),
+        content: PropTypes.shape({
+            rendered: PropTypes.string.isRequired,
+        }),
+    }),
 };
 
 export default Home;

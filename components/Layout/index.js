@@ -1,14 +1,20 @@
+import PropTypes from 'prop-types';
+
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 
-const Layout = ( { children } ) => {
+const Layout = ({ children }) => {
     return (
         <>
             <Header />
-            { children }
+            {children}
             <Footer />
         </>
-    )
-}
+    );
+};
+
+Layout.propTypes = {
+    children: PropTypes.object,
+};
 
 export default Layout;
