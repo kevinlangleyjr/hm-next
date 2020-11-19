@@ -1,4 +1,5 @@
-import { useRouter } from 'next/router'
+import Link from 'next/link';
+import { convertToRelativeUrl } from 'utils/urls';
 
 export const getStaticProps = async context => {
     const { page } = context.params;
@@ -8,6 +9,7 @@ export const getStaticProps = async context => {
     return {
         props: {
             data,
+            page,
         },
         // Next.js will attempt to re-generate the page:
         // - When a request comes in
@@ -46,12 +48,32 @@ export const getStaticPaths = async () => {
     return { paths, fallback: false }
 }
 
-const PaginatedBlog = () => {
-    const router = useRouter()
-    const { page } = router.query;
+const PaginatedBlog = ( { data, page } ) => {
     return (
         <div>
-            Page #{ page }
+            { data.map( post => (
+                <div className="post" key={post.id}>
+                    <h3>
+                        <Link href={convertToRelativeUrl(post.link, '/blog')}>
+                            <a>
+                                {post.title.rendered}
+                            </a>
+                        </Link>
+                    </h3>
+                </div>
+            ))}
+            <footer>
+                <Link href={`/blog/page/${ parseInt( page ) - 1}`}>
+                    <a>
+                        Previous Page
+                    </a>
+                </Link>
+                <Link href={`/blog/page/${ parseInt( page ) + 1 }` }>
+                    <a>
+                        Next Page
+                    </a>
+                </Link>
+            </footer>
         </div>
     )
 }

@@ -30,6 +30,13 @@ const Blog = ( { data } ) => {
                     </h3>
                 </div>
             ) ) }
+            <footer>
+                <Link href="/blog/page/2">
+                    <a>
+                        Next Page
+                    </a>
+                </Link>
+            </footer>
         </div>
     )
 }
