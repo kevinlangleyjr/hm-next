@@ -1,6 +1,6 @@
+import HTMLContent from 'components/HTMLContent';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
-import { Parser as HtmlToReactParser } from 'html-to-react';
 
 export const getStaticProps = async () => {
     const res = await fetch('https://humanmade.com/wp-json/wp/v2/pages/7800');
@@ -15,9 +15,6 @@ export const getStaticProps = async () => {
 };
 
 const Home = ({ data }) => {
-    let htmlToReactParser = new HtmlToReactParser();
-    const content = htmlToReactParser.parse(data.content.rendered);
-
     return (
         <>
             <Head>
@@ -25,7 +22,9 @@ const Home = ({ data }) => {
             </Head>
 
             <main>
-                <div className="content">{content}</div>
+                <div className="content">
+                    <HTMLContent content={data.content.rendered} />
+                </div>
             </main>
         </>
     );

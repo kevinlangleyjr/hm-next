@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import PropTypes from 'prop-types';
-import { Parser as HtmlToReactParser } from 'html-to-react';
+import HTMLContent from 'components/HTMLContent';
 
 export const getStaticProps = async (context) => {
     const { slug } = context.params;
@@ -53,8 +53,6 @@ export const getStaticPaths = async () => {
 };
 
 const Blog = ({ data }) => {
-    let htmlToReactParser = new HtmlToReactParser();
-    const content = htmlToReactParser.parse(data.content.rendered);
     return (
         <>
             <Head>
@@ -63,7 +61,9 @@ const Blog = ({ data }) => {
 
             <main>
                 <h1>{data.title.rendered}</h1>
-                <div className="content">{content}</div>
+                <div className="content">
+                    <HTMLContent content={content} />
+                </div>
             </main>
         </>
     );
