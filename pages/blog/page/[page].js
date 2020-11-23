@@ -1,89 +1,114 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
+import { Component } from 'react';
 import { convertToRelativeUrl } from 'utils/urls';
 
-export const getStaticProps = async (context) => {
-    const { page } = context.params;
-    const res = await fetch(`https://humanmade.com/wp-json/wp/v2/posts?page=${page}`);
-    const data = await res.json();
+/**
+ * Get static props for page.
+ *
+ * @param {object} context Context for the request.
+ *
+ * @returns {object} Static props for page.
+ */
+export const getStaticProps = async context => {
+	const { page } = context.params;
+	const res = await fetch( `https://humanmade.com/wp-json/wp/v2/posts?page=${page}` );
+	const data = await res.json();
 
-    return {
-        props: {
-            data,
-            page,
-        },
-        revalidate: 60,
-    };
+	return {
+		props: {
+			data,
+			page,
+		},
+		revalidate: 60,
+	};
 };
 
+/**
+ * Get static paths for page.
+ *
+ * @returns {object} Path data.
+ */
 export const getStaticPaths = async () => {
-    let page = 1;
-    let paths = [];
+	let page = 1;
+	let paths = [];
 
-    do {
-        const res = await fetch(`https://humanmade.com/wp-json/wp/v2/posts/?page=${page}`);
-        const posts = await res.json();
+	do {
+		const res = await fetch( `https://humanmade.com/wp-json/wp/v2/posts/?page=${page}` );
+		const posts = await res.json();
 
-        if (posts?.data?.status === 400) {
-            page = 0;
-            break;
-        }
+		if ( posts?.data?.status === 400 ) {
+			page = 0;
+			break;
+		}
 
-        paths = [
-            ...paths,
-            ...[
-                {
-                    params: {
-                        page: `${page}`,
-                    },
-                },
-            ],
-        ];
+		paths = [
+			...paths,
+			...[
+				{
+					params: {
+						page: `${page}`,
+					},
+				},
+			],
+		];
 
-        page++;
-    } while (page > 0);
+		page++;
+	} while ( page > 0 );
 
-    return { paths, fallback: false };
+	return {
+		paths,
+		fallback: false,
+	};
 };
 
-const PaginatedBlog = ({ data, page }) => {
-    return (
-        <div>
-            {data.map((post) => (
-                <div className="post" key={post.id}>
-                    <h3>
-                        <Link href={convertToRelativeUrl(post.link, '/blog')}>
-                            <a>{post.title.rendered}</a>
-                        </Link>
-                    </h3>
-                </div>
-            ))}
-            <footer>
-                <Link href={`/blog/page/${parseInt(page) - 1}`}>
-                    <a>Previous Page</a>
-                </Link>
-                <Link href={`/blog/page/${parseInt(page) + 1}`}>
-                    <a>Next Page</a>
-                </Link>
-            </footer>
-        </div>
-    );
+/**
+ * Paginated blog Component
+ *
+ * @param {object} props - Component properties.
+ * @param {object} props.data - Data for the page.
+ * @param {number} props.page - Page number.
+ *
+ * @returns {Component} Paginated blog component.
+ */
+const PaginatedBlog = ( { data, page } ) => {
+	return (
+		<div>
+			{ data.map( post => (
+				<div key={ post.id } className="post">
+					<h3>
+						<Link href={ convertToRelativeUrl( post.link, '/blog' ) }>
+							<a>{ post.title.rendered }</a>
+						</Link>
+					</h3>
+				</div>
+			) ) }
+			<footer>
+				<Link href={ `/blog/page/${parseInt( page ) - 1}` }>
+					<a>Previous Page</a>
+				</Link>
+				<Link href={ `/blog/page/${parseInt( page ) + 1}` }>
+					<a>Next Page</a>
+				</Link>
+			</footer>
+		</div>
+	);
 };
 
 PaginatedBlog.propTypes = {
-    data: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.number.isRequired,
-            link: PropTypes.string,
-            title: PropTypes.shape({
-                rendered: PropTypes.string.isRequired,
-            }),
-            content: PropTypes.shape({
-                rendered: PropTypes.string.isRequired,
-            }),
-        })
-    ),
-    page: PropTypes.string.isRequired,
+	data: PropTypes.arrayOf(
+		PropTypes.shape( {
+			id: PropTypes.number.isRequired,
+			link: PropTypes.string,
+			title: PropTypes.shape( {
+				rendered: PropTypes.string.isRequired,
+			} ),
+			content: PropTypes.shape( {
+				rendered: PropTypes.string.isRequired,
+			} ),
+		} )
+	),
+	page: PropTypes.string.isRequired,
 };
 
 export default PaginatedBlog;
