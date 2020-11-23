@@ -62,7 +62,7 @@ const Blog = ({ data }) => {
             <main>
                 <h1>{data.title.rendered}</h1>
                 <div className="content">
-                    <HTMLContent content={content} />
+                    <HTMLContent content={data.content.rendered} />
                 </div>
             </main>
         </>

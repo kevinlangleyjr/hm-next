@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Image from 'next/image';
 import HtmlToReact, { Parser as HtmlToReactParser } from 'html-to-react';
 import utils from 'html-to-react/lib/utils';
@@ -44,6 +45,10 @@ const HTMLContent = ({ content }) => {
     }
 
     return reactComponents;
+};
+
+HTMLContent.propTypes = {
+    content: PropTypes.string.isRequired,
 };
 
 export default HTMLContent;
