@@ -1,6 +1,7 @@
 import HtmlToReact, { Parser as HtmlToReactParser } from 'html-to-react';
 import utils from 'html-to-react/lib/utils';
 import Image from 'next/image';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
@@ -12,7 +13,7 @@ const processNodeDefinitions = new HtmlToReact.ProcessNodeDefinitions( React );
 // Custom processing instructions for our content.
 const processingInstructions = [
 	{
-		// Convert all relative links into Link components from `next/link`.
+
 		shouldProcessNode: node => {
 			const src = node?.attribs?.src;
 			const width = node?.attribs?.width;
@@ -25,6 +26,25 @@ const processingInstructions = [
 			node.attribs.layout = 'intrinsic';
 
 			return utils.createElement( node, index, node.data, children );
+		},
+	},
+	{
+		shouldProcessNode: node => {
+			const href = node?.attribs?.href;
+
+			return node.name === 'a' && href && ( href.includes( 'https://humanmade.com' ) || href.startsWith( '/' ) );
+		},
+		processNode: ( node, children, index ) => {
+			node.name = Link;
+			node.attribs.href = node.attribs.href.replace( 'https://humanmade.com', '' );
+
+			const wrappedChildren = (
+				<a>
+					{ children }
+				</a>
+			);
+
+			return utils.createElement( node, index, node.data, wrappedChildren );
 		},
 	},
 	{
