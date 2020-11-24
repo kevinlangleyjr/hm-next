@@ -1,17 +1,18 @@
+import Container from 'components/Container';
 import Footer from 'components/Footer';
 import Header from 'components/Header';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 import styled from 'styled-components';
 
-const Container = styled.div`
-	max-width: 65.833333333rem;
-	margin: 0 auto;
-	width: calc( 100% - (0.833333333rem * 2) );
+const LayoutStyles = styled.div`
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+`;
 
-	@media screen and ( min-width: 55rem ) {
-		width: calc( 100% - (0.833333333rem * 4) );
-	}
+const MainContainer = styled( Container )`
+    flex: 1;
 `;
 
 /**
@@ -24,11 +25,13 @@ const Container = styled.div`
  */
 const Layout = ( { children } ) => {
 	return (
-		<Container>
+		<LayoutStyles>
 			<Header />
-			{ children }
+			<MainContainer>
+				{ children }
+			</MainContainer>
 			<Footer />
-		</Container>
+		</LayoutStyles>
 	);
 };
 

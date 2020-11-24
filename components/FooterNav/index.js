@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Component } from 'react';
 import styled from 'styled-components';
 
 const Nav = styled.nav`
@@ -34,47 +33,22 @@ const Nav = styled.nav`
 `;
 
 /**
- * Header Nav Component
  *
- * @returns {Component} Header Nav Component.
  */
-const HeaderNav = () => {
+const FooterNav = () => {
 	return (
-		<Nav>
+		<Nav aria-label="Footer navigation">
 			<ul>
-				<li>
-					<Link href="/">
-						<a>Home</a>
-					</Link>
-				</li>
-				<li>
-					<Link href="/what-we-do">
-						<a>What we do</a>
-					</Link>
-				</li>
-				<li>
-					<Link href="/who-we-are">
-						<a>Who we are</a>
-					</Link>
-				</li>
-				<li>
-					<Link href="/blog">
-						<a>Blog</a>
-					</Link>
-				</li>
-				<li>
-					<Link href="/resources">
-						<a>Resources</a>
-					</Link>
-				</li>
-				<li>
-					<Link href="/get-in-touch">
-						<a>Get in touch</a>
-					</Link>
-				</li>
+				<li><Link href="/sitemap"><a>Sitemap</a></Link></li>
+
+				<li><Link href="/accessibility-statement"><a>Accessibility Statement</a></Link></li>
+
+				<li><Link href="/get-in-touch"><a>Get in touch</a></Link></li>
+
+				<li><Link href="/privacy"><a>Privacy Notice</a></Link></li>
 			</ul>
 		</Nav>
 	);
 };
 
-export default HeaderNav;
+export default FooterNav;

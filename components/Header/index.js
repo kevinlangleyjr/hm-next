@@ -1,5 +1,7 @@
+import Container from 'components/Container';
 import HeaderNav from 'components/HeaderNav';
 import Logo from 'components/Logo';
+import Link from 'next/link';
 import { Component } from 'react';
 import styled from 'styled-components';
 
@@ -25,10 +27,16 @@ const HeaderStyles = styled.header`
  */
 const Header = () => {
 	return (
-		<HeaderStyles>
-			<Logo  />
-			<HeaderNav />
-		</HeaderStyles>
+		<Container>
+			<HeaderStyles>
+				<Link href="/">
+					<a>
+						<Logo />
+					</a>
+				</Link>
+				<HeaderNav />
+			</HeaderStyles>
+		</Container>
 	);
 };
 
