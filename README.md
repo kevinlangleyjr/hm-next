@@ -1,6 +1,6 @@
 # Human Made Next.js Frontend
 
-[🚀 Deployed on Vercel](https://hm-next.vercel.app)
+[🚀 Deployed to Vercel](https://hm-next.vercel.app)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
