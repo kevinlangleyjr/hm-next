@@ -24,7 +24,7 @@ export const getStaticProps = async () => {
  * Blog Component
  *
  * @param {object} props - Component properties.
- * @param {object} props.data - Data for the page.
+ * @param {Array} props.data - Array of blog post objects.
  *
  * @returns {Component} Blog component.
  */
