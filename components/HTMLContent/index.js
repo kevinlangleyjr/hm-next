@@ -66,7 +66,11 @@ const processingInstructions = [
 const HTMLContent = ( { content } ) => {
 	// Check content length before even parsing it and return empty string if it is empty.
 	const reactComponents = content.length
-		? htmlToReactParser.parseWithInstructions( DOMPurify.sanitize( content ).toString(), () => true, processingInstructions )
+		? htmlToReactParser.parseWithInstructions(
+			DOMPurify.sanitize( content ).toString(),
+			() => true,
+			processingInstructions
+		)
 		: '';
 
 	if ( Array.isArray( reactComponents ) ) {
