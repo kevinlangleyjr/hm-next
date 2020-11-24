@@ -1,6 +1,8 @@
 import HTMLContent from 'components/HTMLContent';
 import { Component } from 'react';
 
+const { API_URL_ROOT } = process.env;
+
 /**
  * Get static props for page.
  *
@@ -10,7 +12,7 @@ import { Component } from 'react';
  */
 export const getStaticProps = async context => {
 	const { slug } = context.params;
-	const res = await fetch( `https://humanmade.com/wp-json/wp/v2/hm_projects?slug=${slug}` );
+	const res = await fetch( `${ API_URL_ROOT }/wp-json/wp/v2/hm_projects?slug=${ slug }` );
 	let data = await res.json();
 	data = data[0];
 
@@ -28,7 +30,7 @@ export const getStaticProps = async context => {
  * @returns {object} Path data.
  */
 export const getStaticPaths = async () => {
-	const res = await fetch( 'https://humanmade.com/wp-json/wp/v2/hm_projects?per_page=100' );
+	const res = await fetch( `${ API_URL_ROOT }/wp-json/wp/v2/hm_projects?per_page=100` );
 	const projects = await res.json();
 
 	const paths = projects

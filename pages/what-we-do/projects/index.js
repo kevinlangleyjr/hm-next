@@ -2,13 +2,15 @@ import Link from 'next/link';
 import { Component } from 'react';
 import { convertToRelativeUrl } from 'utils/urls';
 
+const { API_URL_ROOT } = process.env;
+
 /**
  * Get static props for page.
  *
  * @returns {object} Static props for page.
  */
 export const getStaticProps = async () => {
-	const res = await fetch( 'https://humanmade.com/wp-json/wp/v2/hm_projects?per_page=100' );
+	const res = await fetch( `${ API_URL_ROOT }/wp-json/wp/v2/hm_projects?per_page=100` );
 	const data = await res.json();
 
 	return {

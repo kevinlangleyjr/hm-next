@@ -3,6 +3,8 @@ import Head from 'next/head';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 
+const { API_URL_ROOT } = process.env;
+
 /**
  * Get static props for page.
  *
@@ -12,7 +14,7 @@ import { Component } from 'react';
  */
 export const getStaticProps = async context => {
 	const { slug } = context.params;
-	const res = await fetch( `https://humanmade.com/wp-json/wp/v2/pages?slug=${slug}` );
+	const res = await fetch( `${ API_URL_ROOT }/wp-json/wp/v2/pages?slug=${slug}` );
 	let data = await res.json();
 	data = data[0];
 
@@ -30,7 +32,7 @@ export const getStaticProps = async context => {
  * @returns {object} Path data.
  */
 export const getStaticPaths = async () => {
-	const res = await fetch( 'https://humanmade.com/wp-json/wp/v2/pages?per_page=100' );
+	const res = await fetch( `${API_URL_ROOT }/wp-json/wp/v2/pages?per_page=100` );
 	const pages = await res.json();
 
 	const paths = pages

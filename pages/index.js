@@ -3,13 +3,15 @@ import Head from 'next/head';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 
+const { API_URL_ROOT } = process.env;
+
 /**
  * Get static props for page.
  *
  * @returns {object} Static props for page.
  */
 export const getStaticProps = async () => {
-	const res = await fetch( 'https://humanmade.com/wp-json/wp/v2/pages/7800' );
+	const res = await fetch( `${ API_URL_ROOT }/wp-json/wp/v2/pages/7800` );
 	let data = await res.json();
 
 	return {
