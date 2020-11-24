@@ -1,5 +1,6 @@
 import HtmlToReact, { Parser as HtmlToReactParser } from 'html-to-react';
 import utils from 'html-to-react/lib/utils';
+import DOMPurify from 'isomorphic-dompurify';
 import Image from 'next/image';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
@@ -65,7 +66,7 @@ const processingInstructions = [
 const HTMLContent = ( { content } ) => {
 	// Check content length before even parsing it and return empty string if it is empty.
 	const reactComponents = content.length
-		? htmlToReactParser.parseWithInstructions( content, () => true, processingInstructions )
+		? htmlToReactParser.parseWithInstructions( DOMPurify.sanitize( content ).toString(), () => true, processingInstructions )
 		: '';
 
 	if ( Array.isArray( reactComponents ) ) {
