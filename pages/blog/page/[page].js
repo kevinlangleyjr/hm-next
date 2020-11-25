@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { convertToRelativeUrl } from 'utils/urls';
@@ -61,7 +62,7 @@ export const getStaticPaths = async () => {
 
 	return {
 		paths,
-		fallback: false,
+		fallback: true,
 	};
 };
 
@@ -75,6 +76,12 @@ export const getStaticPaths = async () => {
  * @returns {Component} Paginated blog component.
  */
 const PaginatedBlog = ( { data, page } ) => {
+	const router = useRouter();
+
+	if ( router.isFallback ) {
+		return <div>Loading...</div>;
+	}
+
 	return (
 		<>
 			<Head>

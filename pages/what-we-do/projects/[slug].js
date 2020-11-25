@@ -1,5 +1,6 @@
 import HTMLContent from 'components/HTMLContent';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { Component } from 'react';
 
 const { API_URL_ROOT } = process.env;
@@ -41,7 +42,7 @@ export const getStaticPaths = async () => {
 
 	return {
 		paths,
-		fallback: false,
+		fallback: true,
 	};
 };
 
@@ -54,6 +55,12 @@ export const getStaticPaths = async () => {
  * @returns {Component} Single project component.
  */
 const SingleProject = ( { data } ) => {
+	const router = useRouter();
+
+	if ( router.isFallback ) {
+		return <div>Loading...</div>;
+	}
+
 	return (
 		<>
 			<Head>
