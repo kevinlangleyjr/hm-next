@@ -1,4 +1,5 @@
 import HTMLContent from 'components/HTMLContent';
+import Head from 'next/head';
 import { Component } from 'react';
 
 const { API_URL_ROOT } = process.env;
@@ -54,16 +55,21 @@ export const getStaticPaths = async () => {
  */
 const SingleProject = ( { data } ) => {
 	return (
-		<div>
-			<h2>
+		<>
+			<Head>
+				<title>Human Made | { data.title.rendered }</title>
+			</Head>
+			<div>
+				<h2>
+					<HTMLContent
+						content={ data.title.rendered }
+					/>
+				</h2>
 				<HTMLContent
-					content={ data.title.rendered }
+					content={ data.page_builder.rendered }
 				/>
-			</h2>
-			<HTMLContent
-				content={ data.page_builder.rendered }
-			/>
-		</div>
+			</div>
+		</>
 	);
 };
 

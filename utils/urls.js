@@ -7,4 +7,4 @@
  * @returns {string} - Converted string.
  */
 export const convertToRelativeUrl = ( url, prefix = '' ) =>
-	`${prefix}${url.replace( 'https://humanmade.com', '' )}`;
+	`${prefix}${url.replace( process.env.API_URL_ROOT, '' )}`;

@@ -59,7 +59,7 @@ const Page = ( { data } ) => {
 	return (
 		<>
 			<Head>
-				<title>{ data.title.rendered }</title>
+				<title>Human Made | { data.title.rendered }</title>
 			</Head>
 
 			<main>

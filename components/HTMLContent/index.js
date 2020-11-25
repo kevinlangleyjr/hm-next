@@ -11,6 +11,8 @@ const htmlToReactParser = new HtmlToReactParser();
 // Get the default processing definitions.
 const processNodeDefinitions = new HtmlToReact.ProcessNodeDefinitions( React );
 
+const { API_URL_ROOT } = process.env;
+
 // Custom processing instructions for our content.
 const processingInstructions = [
 	{
@@ -33,11 +35,11 @@ const processingInstructions = [
 		shouldProcessNode: node => {
 			const href = node?.attribs?.href;
 
-			return node.name === 'a' && href && ( href.includes( 'https://humanmade.com' ) || href.startsWith( '/' ) );
+			return node.name === 'a' && href && ( href.includes( API_URL_ROOT ) || href.startsWith( '/' ) );
 		},
 		processNode: ( node, children, index ) => {
 			node.name = Link;
-			node.attribs.href = node.attribs.href.replace( 'https://humanmade.com', '' );
+			node.attribs.href = node.attribs.href.replace( API_URL_ROOT, '' );
 
 			const wrappedChildren = (
 				<a>

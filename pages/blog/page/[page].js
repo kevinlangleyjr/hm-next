@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
@@ -75,25 +76,30 @@ export const getStaticPaths = async () => {
  */
 const PaginatedBlog = ( { data, page } ) => {
 	return (
-		<div>
-			{ data.map( post => (
-				<div key={ post.id } className="post">
-					<h3>
-						<Link href={ convertToRelativeUrl( post.link, '/blog' ) }>
-							<a>{ post.title.rendered }</a>
-						</Link>
-					</h3>
-				</div>
-			) ) }
-			<footer>
-				<Link href={ `/blog/page/${parseInt( page ) - 1}` }>
-					<a>Previous Page</a>
-				</Link>
-				<Link href={ `/blog/page/${parseInt( page ) + 1}` }>
-					<a>Next Page</a>
-				</Link>
-			</footer>
-		</div>
+		<>
+			<Head>
+				<title>Human Made | Blog | Page { page }</title>
+			</Head>
+			<div>
+				{ data.map( post => (
+					<div key={ post.id } className="post">
+						<h3>
+							<Link href={ convertToRelativeUrl( post.link, '/blog' ) }>
+								<a>{ post.title.rendered }</a>
+							</Link>
+						</h3>
+					</div>
+				) ) }
+				<footer>
+					<Link href={ `/blog/page/${parseInt( page ) - 1}` }>
+						<a>Previous Page</a>
+					</Link>
+					<Link href={ `/blog/page/${parseInt( page ) + 1}` }>
+						<a>Next Page</a>
+					</Link>
+				</footer>
+			</div>
+		</>
 	);
 };
 

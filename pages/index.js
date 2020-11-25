@@ -34,7 +34,7 @@ const Home = ( { data } ) => {
 	return (
 		<>
 			<Head>
-				<title>Human Made | { data.title.rendered }</title>
+				<title>Human Made | Home</title>
 			</Head>
 
 			<main>

@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import { Component } from 'react';
 import { convertToRelativeUrl } from 'utils/urls';
@@ -31,17 +32,22 @@ export const getStaticProps = async () => {
  */
 const ProjectsArchive = ( { data } ) => {
 	return (
-		<div>
-			{ data.map( project => (
-				<div key={ project.id } className="project">
-					<h3>
-						<Link href={ convertToRelativeUrl( project.link ) }>
-							<a>{ project.title.rendered }</a>
-						</Link>
-					</h3>
-				</div>
-			) ) }
-		</div>
+		<>
+			<Head>
+				<title>Human Made | Projects</title>
+			</Head>
+			<div>
+				{ data.map( project => (
+					<div key={ project.id } className="project">
+						<h3>
+							<Link href={ convertToRelativeUrl( project.link ) }>
+								<a>{ project.title.rendered }</a>
+							</Link>
+						</h3>
+					</div>
+				) ) }
+			</div>
+		</>
 	);
 };
 

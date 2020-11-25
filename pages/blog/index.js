@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
@@ -32,22 +33,27 @@ export const getStaticProps = async () => {
  */
 const Blog = ( { data } ) => {
 	return (
-		<div>
-			{ data.map( post => (
-				<div key={ post.id } className="post">
-					<h3>
-						<Link href={ convertToRelativeUrl( post.link, '/blog' ) }>
-							<a>{ post.title.rendered }</a>
-						</Link>
-					</h3>
-				</div>
-			) ) }
-			<footer>
-				<Link href="/blog/page/2">
-					<a>Next Page</a>
-				</Link>
-			</footer>
-		</div>
+		<>
+			<Head>
+				<title>Human Made | Blog</title>
+			</Head>
+			<div>
+				{ data.map( post => (
+					<div key={ post.id } className="post">
+						<h3>
+							<Link href={ convertToRelativeUrl( post.link, '/blog' ) }>
+								<a>{ post.title.rendered }</a>
+							</Link>
+						</h3>
+					</div>
+				) ) }
+				<footer>
+					<Link href="/blog/page/2">
+						<a>Next Page</a>
+					</Link>
+				</footer>
+			</div>
+		</>
 	);
 };
 
