@@ -1,5 +1,8 @@
 import HTMLContent from 'components/HTMLContent';
+import he from 'he';
+import DOMPurify from 'isomorphic-dompurify';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 
@@ -64,7 +67,7 @@ export const getStaticPaths = async () => {
 
 	return {
 		paths,
-		fallback: false,
+		fallback: true,
 	};
 };
 
@@ -77,14 +80,20 @@ export const getStaticPaths = async () => {
  * @returns {Component} Single Blog Post component.
  */
 const SingleBlogPost = ( { data } ) => {
+	const router = useRouter();
+
+	if ( router.isFallback ) {
+		return <div>Loading...</div>;
+	}
+
 	return (
 		<>
 			<Head>
-				<title>Human Made | { data.title.rendered }</title>
+				<title>Human Made | { he.decode( DOMPurify.sanitize( data.title.rendered, { ALLOWED_TAGS: [] } ) ) }</title>
 			</Head>
 
 			<main>
-				<h1>{ data.title.rendered }</h1>
+				<h1>{ he.decode( DOMPurify.sanitize( data.title.rendered ) ) }</h1>
 				<div className="content">
 					<HTMLContent content={ data.content.rendered } />
 				</div>

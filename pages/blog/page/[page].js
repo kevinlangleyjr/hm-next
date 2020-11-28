@@ -1,3 +1,5 @@
+import he from 'he';
+import DOMPurify from 'isomorphic-dompurify';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -92,7 +94,7 @@ const PaginatedBlog = ( { data, page } ) => {
 					<div key={ post.id } className="post">
 						<h3>
 							<Link href={ convertToRelativeUrl( post.link, '/blog' ) }>
-								<a>{ post.title.rendered }</a>
+								<a>{ he.decode( DOMPurify.sanitize( post.title.rendered ) ) }</a>
 							</Link>
 						</h3>
 					</div>

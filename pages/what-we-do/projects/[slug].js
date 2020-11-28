@@ -1,4 +1,6 @@
 import HTMLContent from 'components/HTMLContent';
+import he from 'he';
+import DOMPurify from 'isomorphic-dompurify';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Component } from 'react';
@@ -64,16 +66,16 @@ const SingleProject = ( { data } ) => {
 	return (
 		<>
 			<Head>
-				<title>Human Made | { data.title.rendered }</title>
+				<title>Human Made | { he.decode( DOMPurify.sanitize( data.title.rendered, { ALLOWED_TAGS: [] } ) ) }</title>
 			</Head>
 			<div>
 				<h2>
 					<HTMLContent
-						content={ data.title.rendered }
+						content={ he.decode( DOMPurify.sanitize( data.title.rendered ) ) }
 					/>
 				</h2>
 				<HTMLContent
-					content={ data.page_builder.rendered }
+					content={ DOMPurify.sanitize( data.page_builder.rendered ) }
 				/>
 			</div>
 		</>
