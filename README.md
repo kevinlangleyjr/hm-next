@@ -1,4 +1,4 @@
-# Human Made Next.js Frontend
+# Human Made on the Jamstack
 
 [🚀 Deployed to Vercel](https://hm-next.vercel.app)
 
