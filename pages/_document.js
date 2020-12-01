@@ -34,9 +34,35 @@ export default class HMDocument extends Document {
 		}
 	}
 	render() {
+		const { NEXT_PUBLIC_GA_TRACKING_ID } = process.env;
+
 		return (
 			<Html>
-				<Head>{ this.props.styleTags }</Head>
+				<Head>
+					{ this.props.styleTags }
+					{ NEXT_PUBLIC_GA_TRACKING_ID && (
+						<>
+							<script
+								async
+								src={ `https://www.googletagmanager.com/gtag/js?id=${ NEXT_PUBLIC_GA_TRACKING_ID }` }
+							/>
+							<script
+								dangerouslySetInnerHTML={ {
+									__html: `
+										window.dataLayer = window.dataLayer || [];
+										function gtag(){
+											dataLayer.push( arguments );
+										}
+										gtag( 'js', new Date() );
+										gtag( 'config', '${ NEXT_PUBLIC_GA_TRACKING_ID }', {
+											page_path: window.location.pathname,
+										} );
+							`,
+								} }
+							/>
+						</>
+					) }
+				</Head>
 				<body>
 					<Main />
 					<NextScript />
