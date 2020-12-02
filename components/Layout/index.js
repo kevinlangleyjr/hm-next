@@ -32,7 +32,6 @@ const Layout = ( { children } ) => {
 		 * @param {string} url URL of the new route.
 		 */
 		const handleRouteChange = url => {
-			debugger;
 			if ( process.browser && process.env.NEXT_PUBLIC_GA_TRACKING_ID ) {
 				window.gtag( 'config', process.env.NEXT_PUBLIC_GA_TRACKING_ID, {
 					page_path: window.location.pathname,

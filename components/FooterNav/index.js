@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Component } from 'react';
 import styled from 'styled-components';
 
 const Nav = styled.nav`
@@ -33,7 +34,9 @@ const Nav = styled.nav`
 `;
 
 /**
+ * FooterNav Component.
  *
+ * @returns {Component} FooterNav Component.
  */
 const FooterNav = () => {
 	return (
