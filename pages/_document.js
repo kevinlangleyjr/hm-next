@@ -37,7 +37,7 @@ export default class HMDocument extends Document {
 		const { NEXT_PUBLIC_GA_TRACKING_ID } = process.env;
 
 		return (
-			<Html>
+			<Html lang="en">
 				<Head>
 					{ this.props.styleTags }
 					{ NEXT_PUBLIC_GA_TRACKING_ID && (
