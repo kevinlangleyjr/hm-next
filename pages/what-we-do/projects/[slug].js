@@ -4,8 +4,7 @@ import DOMPurify from 'isomorphic-dompurify';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Component } from 'react';
-
-const { API_URL_ROOT } = process.env;
+import { getProjectBySlug, getProjects } from 'utils/api';
 
 /**
  * Get static props for page.
@@ -16,9 +15,7 @@ const { API_URL_ROOT } = process.env;
  */
 export const getStaticProps = async context => {
 	const { slug } = context.params;
-	const res = await fetch( `${ API_URL_ROOT }/wp-json/wp/v2/hm_projects?slug=${ slug }` );
-	let data = await res.json();
-	data = data[0];
+	const data = await getProjectBySlug( slug );
 
 	return {
 		props: {
@@ -34,8 +31,7 @@ export const getStaticProps = async context => {
  * @returns {object} Path data.
  */
 export const getStaticPaths = async () => {
-	const res = await fetch( `${ API_URL_ROOT }/wp-json/wp/v2/hm_projects?per_page=100` );
-	const projects = await res.json();
+	const projects = await getProjects();
 
 	const paths = projects
 		.map( project => ( {

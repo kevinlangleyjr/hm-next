@@ -5,7 +5,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Component } from 'react';
-import { getHuman } from 'utils/api';
+import { getHumanBySlug } from 'utils/api';
 
 const { API_URL_ROOT } = process.env;
 
@@ -18,7 +18,7 @@ const { API_URL_ROOT } = process.env;
  */
 export const getStaticProps = async context => {
 	const { slug } = context.params;
-	const data = await getHuman( slug );
+	const data = await getHumanBySlug( slug );
 
 	return {
 		props: {

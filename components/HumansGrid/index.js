@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const HumansContainer = styled.div`

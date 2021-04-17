@@ -44,7 +44,7 @@ export const getHumans = async () => {
  *
  * @returns {object} Static props for human.
  */
-export const getHuman = async slug => {
+export const getHumanBySlug = async slug => {
 	const res = await fetch( `${API_URL_ROOT}/wp-json/hmn/v1/humans?slug=${slug}` );
 	let data = await res.json();
 
@@ -75,6 +75,67 @@ export const getPostBySlug = async slug => {
 	const res = await fetch( `${API_URL_ROOT}/wp-json/wp/v2/posts?slug=${slug}` );
 
 	const data = await res.json();
+
+	return data[0] ?? {};
+};
+
+/**
+ * Get all projects.
+ *
+ * @returns {Array} Array of projects.
+ */
+export const getProjects = async () => {
+	const res = await fetch( `${API_URL_ROOT}/wp-json/wp/v2/hm_projects?per_page=100` );
+	return await res.json();
+};
+
+/**
+ * Get all projects.
+ *
+ * @param {string} slug Project slug.
+ *
+ * @returns {Array} Array of projects.
+ */
+export const getProjectBySlug = async slug => {
+	const res = await fetch( `${API_URL_ROOT}/wp-json/wp/v2/hm_projects?slug=${slug}` );
+	const data = await res.json();
+
+	return data[0] ?? {};
+};
+
+/**
+ * Get projects by industry ID
+ *
+ * @param {number} industry Industry Id
+ *
+ * @returns {Array} Array of projects
+ */
+export const getProjectsByIndustry = async industry => {
+	const res = await fetch( `${API_URL_ROOT}/wp-json/wp/v2/hm_projects?hm_industries=${industry}` );
+	return await res.json();
+};
+
+/**
+ * Get industries
+ *
+ * @returns {Array} Array of industries
+ */
+export const getIndustries = async () => {
+	const res = await fetch( `${API_URL_ROOT}/wp-json/wp/v2/hm_industries?per_page=100` );
+
+	return await res.json();
+};
+
+/**
+ * Get industry by slug.
+ *
+ * @param {string} slug Industry slug
+ *
+ * @returns {object} Industry data.
+ */
+export const getIndustryBySlug = async slug => {
+	const res = await fetch( `${API_URL_ROOT}/wp-json/wp/v2/hm_industries?slug=${slug}` );
+	let data = await res.json();
 
 	return data[0] ?? {};
 };

@@ -5,17 +5,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Component } from 'react';
+import { getIndustryBySlug, getProjectsByIndustry, getIndustries } from 'utils/api';
 import { convertToRelativeUrl } from 'utils/urls';
-
-const { API_URL_ROOT } = process.env;
-
-/**
- * @param id
- */
-const getProjects = async id => {
-	const res = await fetch( `${ API_URL_ROOT }/wp-json/wp/v2/hm_projects?hm_industries=${ id }` );
-	return await res.json();
-};
 
 /**
  * Get static props for page.
@@ -26,11 +17,9 @@ const getProjects = async id => {
  */
 export const getStaticProps = async context => {
 	const { slug } = context.params;
-	const res = await fetch( `${ API_URL_ROOT }/wp-json/wp/v2/hm_industries?slug=${ slug }` );
-	let data = await res.json();
-	data = data[0];
+	const data = getIndustryBySlug( slug );
 
-	data.projects = await getProjects( data.id );
+	data.projects = await getProjectsByIndustry( data.id );
 
 	return {
 		props: {
@@ -46,8 +35,7 @@ export const getStaticProps = async context => {
  * @returns {object} Path data.
  */
 export const getStaticPaths = async () => {
-	const res = await fetch( `${ API_URL_ROOT }/wp-json/wp/v2/hm_industries?per_page=100` );
-	const industries = await res.json();
+	const industries = await getIndustries();
 
 	const paths = industries
 		.map( industry => ( {

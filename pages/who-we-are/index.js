@@ -3,13 +3,9 @@ import HumansGrid from 'components/HumansGrid';
 import he from 'he';
 import DOMPurify from 'isomorphic-dompurify';
 import Head from 'next/head';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Component } from 'react';
 import { getHumans, getPageBySlug } from 'utils/api';
-
-const { API_URL_ROOT } = process.env;
 
 /**
  * Get static props for page.

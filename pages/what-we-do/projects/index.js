@@ -2,9 +2,8 @@ import he from 'he';
 import Head from 'next/head';
 import Link from 'next/link';
 import { Component } from 'react';
+import { getProjects } from 'utils/api';
 import { convertToRelativeUrl } from 'utils/urls';
-
-const { API_URL_ROOT } = process.env;
 
 /**
  * Get static props for page.
@@ -12,8 +11,7 @@ const { API_URL_ROOT } = process.env;
  * @returns {object} Static props for page.
  */
 export const getStaticProps = async () => {
-	const res = await fetch( `${ API_URL_ROOT }/wp-json/wp/v2/hm_projects?per_page=100` );
-	const data = await res.json();
+	const data = getProjects();
 
 	return {
 		props: {
