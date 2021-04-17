@@ -16,6 +16,14 @@ const { API_URL_ROOT } = process.env;
 // Custom processing instructions for our content.
 const processingInstructions = [
 	{
+		shouldProcessNode: node => {
+			return node.attribs && node?.attribs?.class === 'human-grid';
+		},
+		processNode: ( node, children, index ) => {
+			return null;
+		},
+	},
+	{
 
 		shouldProcessNode: node => {
 			const src = node?.attribs?.src;

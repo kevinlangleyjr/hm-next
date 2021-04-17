@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
+import { getPostBySlug } from 'utils/api';
 
 const { API_URL_ROOT } = process.env;
 
@@ -17,9 +18,7 @@ const { API_URL_ROOT } = process.env;
  */
 export const getStaticProps = async context => {
 	const { slug } = context.params;
-	const res = await fetch( `${ API_URL_ROOT }/wp-json/wp/v2/posts?slug=${slug}` );
-	let data = await res.json();
-	data = data[0];
+	const data = await getPostBySlug( slug );
 
 	return {
 		props: {

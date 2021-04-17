@@ -63,8 +63,8 @@ const HeaderNav = () => {
 					</Link>
 				</li>
 				<li>
-					<Link href="/resources">
-						<a>Resources</a>
+					<Link href="/hiring">
+						<a>Careers</a>
 					</Link>
 				</li>
 				<li>

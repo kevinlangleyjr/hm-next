@@ -8,13 +8,13 @@ import { Component } from 'react';
 import styled from 'styled-components';
 
 const LayoutStyles = styled.div`
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
 `;
 
 const MainContainer = styled( Container )`
-    flex: 1;
+	flex: 1;
 `;
 
 /**

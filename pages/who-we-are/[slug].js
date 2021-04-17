@@ -5,11 +5,12 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Component } from 'react';
+import { getHuman } from 'utils/api';
 
 const { API_URL_ROOT } = process.env;
 
 /**
- * Get static props for page.
+ * Get static props for human.
  *
  * @param {object} context Context for the request.
  *
@@ -17,9 +18,7 @@ const { API_URL_ROOT } = process.env;
  */
 export const getStaticProps = async context => {
 	const { slug } = context.params;
-	const res = await fetch( `${ API_URL_ROOT }/wp-json/hmn/v1/humans?slug=${ slug }` );
-	let data = await res.json();
-	data = data[0];
+	const data = await getHuman( slug );
 
 	return {
 		props: {
@@ -30,7 +29,7 @@ export const getStaticProps = async context => {
 };
 
 /**
- * Get static paths for page.
+ * Get static paths for humans.
  *
  * @returns {object} Path data.
  */

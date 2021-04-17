@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
+import { getPosts } from 'utils/api';
 import { convertToRelativeUrl } from 'utils/urls';
 
 const { API_URL_ROOT } = process.env;
@@ -40,8 +41,7 @@ export const getStaticPaths = async () => {
 	let paths = [];
 
 	do {
-		const res = await fetch( `${ API_URL_ROOT }/wp-json/wp/v2/posts/?page=${ page }` );
-		const posts = await res.json();
+		const posts = await getPosts( page );
 
 		if ( posts?.data?.status === 400 ) {
 			page = 0;

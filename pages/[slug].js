@@ -5,8 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
-
-const { API_URL_ROOT } = process.env;
+import { getPages, getPageBySlug } from 'utils/api';
 
 /**
  * Get static props for page.
@@ -17,9 +16,7 @@ const { API_URL_ROOT } = process.env;
  */
 export const getStaticProps = async context => {
 	const { slug } = context.params;
-	const res = await fetch( `${ API_URL_ROOT }/wp-json/wp/v2/pages?slug=${ slug }` );
-	let data = await res.json();
-	data = data[0];
+	const data = await getPageBySlug( slug );
 
 	return {
 		props: {
@@ -35,8 +32,7 @@ export const getStaticProps = async context => {
  * @returns {object} Path data.
  */
 export const getStaticPaths = async () => {
-	const res = await fetch( `${ API_URL_ROOT }/wp-json/wp/v2/pages?per_page=100` );
-	const pages = await res.json();
+	const pages = await getPages();
 
 	const paths = pages
 		.filter( page => page.slug !== 'blog' )
