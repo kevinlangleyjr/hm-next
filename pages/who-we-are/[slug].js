@@ -38,6 +38,7 @@ export const getStaticPaths = async () => {
 	const humans = await res.json();
 
 	const paths = humans
+		.filter( human => human.slug !== 'Noel' )
 		.map( human => ( {
 			params: {
 				slug: human.slug,
