@@ -35,7 +35,7 @@ export const getStaticPaths = async () => {
 	const pages = await getPages();
 
 	const paths = pages
-		.filter( page => page.slug !== 'blog' )
+		.filter( page => page.slug !== 'blog' && page.slug !== 'who-we-are' )
 		.map( page => ( {
 			params: { slug: page.slug },
 		} ) );
