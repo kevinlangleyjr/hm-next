@@ -45,7 +45,7 @@ export const getHumans = async () => {
  * @returns {object} Static props for human.
  */
 export const getHumanBySlug = async slug => {
-	const res = await fetch( `${API_URL_ROOT}/wp-json/hmn/v1/humans?slug=${slug}` );
+	const res = await fetch( `${API_URL_ROOT}/wp-json/hmn/v1/humans?slugs=${slug}` );
 	let data = await res.json();
 
 	return data[0] ?? {};
