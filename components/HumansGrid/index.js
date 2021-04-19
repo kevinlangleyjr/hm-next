@@ -26,7 +26,7 @@ const Human = styled.div`
 const HumansGrid = ( { humans } ) => (
 	<HumansContainer>
 		{ humans.map( human => (
-			<Human>
+			<Human key={ human.slug }>
 				<Link href={ `/who-we-are/${human.slug}` }>
 					<a>
 						<p>{ human.display_name }</p>
@@ -39,7 +39,7 @@ const HumansGrid = ( { humans } ) => (
 );
 
 HumansGrid.propTypes = {
-	content: PropTypes.string.isRequired,
+	humans: PropTypes.array.isRequired,
 };
 
 export default HumansGrid;
