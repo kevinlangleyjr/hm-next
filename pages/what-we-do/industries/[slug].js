@@ -17,7 +17,7 @@ import { convertToRelativeUrl } from 'utils/urls';
  */
 export const getStaticProps = async context => {
 	const { slug } = context.params;
-	const data = getIndustryBySlug( slug );
+	const data = await getIndustryBySlug( slug );
 
 	data.projects = await getProjectsByIndustry( data.id );
 

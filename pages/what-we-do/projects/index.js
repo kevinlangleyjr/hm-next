@@ -11,7 +11,7 @@ import { convertToRelativeUrl } from 'utils/urls';
  * @returns {object} Static props for page.
  */
 export const getStaticProps = async () => {
-	const data = getProjects();
+	const data = await getProjects();
 
 	return {
 		props: {
