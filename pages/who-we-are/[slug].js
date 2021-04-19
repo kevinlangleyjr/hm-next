@@ -5,9 +5,18 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Component } from 'react';
+import styled from 'styled-components';
 import { getHumanBySlug } from 'utils/api';
 
 const { API_URL_ROOT } = process.env;
+
+const Center = styled.div`
+	text-align: center;
+
+	img {
+		margin: 0 auto;
+	}
+`;
 
 /**
  * Get static props for human.
@@ -77,11 +86,13 @@ const SingleHuman = ( { data } ) => {
 						content={ he.decode( DOMPurify.sanitize( data.display_name ) ) }
 					/>
 				</h2>
-				<Image
-					height="551"
-					src={ data?.xprofile?.base_public?.fields?.website_photo?.value }
-					width="735"
-				/>
+				<Center>
+					<Image
+						height="551"
+						src={ data?.xprofile?.base_public?.fields?.website_photo?.value }
+						width="735"
+					/>
+				</Center>
 				<h3>
 					<HTMLContent
 						content={ he.decode( DOMPurify.sanitize( data?.xprofile?.base_public?.fields?.short_bio.value ) ) }
